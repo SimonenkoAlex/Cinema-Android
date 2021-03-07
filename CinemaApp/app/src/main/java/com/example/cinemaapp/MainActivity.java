@@ -2,7 +2,9 @@ package com.example.cinemaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,7 +14,8 @@ import java.sql.Types;
 
 public class MainActivity extends AppCompatActivity {
     private static ConnectionDatabase connect = new ConnectionDatabase();
-
+    GlobalVariables gv = GlobalVariables.getInstance();
+    // объявляем переменные
     Button btnLogin;
     EditText loginText, passText;
 
@@ -24,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         loginText = findViewById(R.id.loginText);
         passText = findViewById(R.id.passText);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                authorization(loginText.getText().toString(), passText.getText().toString())
+            }
+        });
     }
 
     // создание функции для авторизации на PostgreSQL
@@ -52,7 +62,13 @@ public class MainActivity extends AppCompatActivity {
             String _report = stmt.getString(8);
             // условие проверки правильности введения имени пользователя и пароля
             if(_report.equals("OK")){
-
+                gv.set_code_user_login(_code);
+                gv.set_last_name(_last_name);
+                gv.set_first_name(_first_name);
+                gv.set_phone(_phone);
+                gv.set_email(_email);
+                Intent personalArea = new Intent(this, PersonalAreaActivity.class);
+                startActivity(personalArea);
             } else {
                 Toast.makeText(getApplicationContext(), _report.toString(), Toast.LENGTH_SHORT).show();
             }
