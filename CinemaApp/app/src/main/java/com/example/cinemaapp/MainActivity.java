@@ -1,6 +1,7 @@
 package com.example.cinemaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.CallableStatement;
-import java.sql.Types;
+import java.sql.*;
 
 public class MainActivity extends AppCompatActivity {
     private static ConnectionDatabase connect = new ConnectionDatabase();
@@ -22,16 +22,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         // присваеваем значение id каждого элемента интерфейса переменным
-        btnLogin = findViewById(R.id.btnLogin);
-        loginText = findViewById(R.id.loginText);
-        passText = findViewById(R.id.passText);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        loginText = (EditText) findViewById(R.id.loginText);
+        passText = (EditText) findViewById(R.id.passText);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                authorization(loginText.getText().toString(), passText.getText().toString())
+                authorization(loginText.getText().toString(), passText.getText().toString());
             }
         });
     }
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     // создание функции для авторизации на PostgreSQL
     public void authorization(String login, String password){
         try {
-            String storeProcedureCall = "CALL to_login_android(?,?,?,?,?,?,?,?)";
+            String storeProcedureCall = "SELECT * FROM to_login_android('" + login + "','" + password + "')";
             CallableStatement stmt = connect.connectPostgreSQL().prepareCall(storeProcedureCall);
             // первые два параметра являются входными
             stmt.setString(1, login);

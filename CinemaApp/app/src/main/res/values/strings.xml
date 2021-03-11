@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">CinemaApp</string>
     <string name="button_login">Вход</string>
+    <string name="button_registration">Регистрация</string>
     <string name="input_login">Введите имя пользователя</string>
     <string name="input_password">Введите пароль</string>
+    <string name="input_lastname">Введите фамилию</string>
+    <string name="input_firstname">Введите имя</string>
+    <string name="input_phone">Введите номер телефона</string>
+    <string name="input_email">Введите E-mail</string>
     <string name="welcome_text">Добро пожаловать</string>
     <string name="last_name">Фамилия :</string>
     <string name="first_name">Имя :</string>

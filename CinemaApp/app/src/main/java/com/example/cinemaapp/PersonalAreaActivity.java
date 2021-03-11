@@ -13,7 +13,7 @@ public class PersonalAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_area);
+        setContentView(R.layout.content_personal_area);
         // присваеваем значение id каждого элемента интерфейса переменным
         lastnameText = findViewById(R.id.lastnameText);
         firstnameText = findViewById(R.id.firstnameText);
